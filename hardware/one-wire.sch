@@ -29,6 +29,7 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
+LIBS:one-wire-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -405,7 +406,7 @@ Wire Wire Line
 Wire Wire Line
 	4650 2950 4750 2950
 Wire Wire Line
-	4750 3150 4650 3150
+	4750 2750 4650 2750
 NoConn ~ 4750 4250
 NoConn ~ 4750 4150
 NoConn ~ 4750 3050
@@ -413,16 +414,16 @@ NoConn ~ 4750 5050
 $Comp
 L CONN_01X01 P102
 U 1 1 590B4637
-P 4200 2750
-F 0 "P102" H 4150 2650 50  0000 C CNN
-F 1 "DEBUG" V 4300 2750 50  0000 C CNN
-F 2 "kicad-libraries:DEBUG_PAD" H 4200 2750 50  0001 C CNN
-F 3 "" H 4200 2750 50  0000 C CNN
-	1    4200 2750
+P 4200 3150
+F 0 "P102" H 4150 3050 50  0000 C CNN
+F 1 "DEBUG" V 4300 3150 50  0000 C CNN
+F 2 "kicad-libraries:DEBUG_PAD" H 4200 3150 50  0001 C CNN
+F 3 "" H 4200 3150 50  0000 C CNN
+	1    4200 3150
 	-1   0    0    1   
 $EndComp
 Wire Wire Line
-	4750 2750 4400 2750
+	4750 3150 4400 3150
 NoConn ~ 4750 3350
 $Comp
 L NC7WZ07 U1
@@ -469,9 +470,9 @@ Text GLabel 7650 2350 0    47   Input ~ 0
 TX
 Text GLabel 4650 2950 0    47   Output ~ 0
 TX
-Text GLabel 4650 3150 0    47   Input ~ 0
+Text GLabel 4650 2750 0    47   Input ~ 0
 RX
-Text GLabel 9350 2650 2    47   Input ~ 0
+Text GLabel 9350 2650 2    47   Output ~ 0
 RX
 Wire Wire Line
 	9350 2650 8900 2650
@@ -711,4 +712,6 @@ Wire Wire Line
 Wire Wire Line
 	8550 4900 8550 5050
 Connection ~ 8300 5050
+Text Notes 3050 3250 0    39   ~ 0
+UART/CH1\nP0.0 : USIC0_CH1-DX0 : RX\nP0.6 : USIC0_CH1-DOUT0 : TX\n\n
 $EndSCHEMATC
