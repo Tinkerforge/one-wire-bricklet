@@ -1,11 +1,11 @@
-(kicad_pcb (version 4) (host pcbnew 4.0.2+dfsg1-stable)
+(kicad_pcb (version 4) (host pcbnew 4.0.7-e2-6376~61~ubuntu18.04.1)
 
   (general
     (links 56)
     (no_connects 0)
-    (area 132.109499 109.509499 162.490501 139.890501)
+    (area 11.95714 108.844999 163.155001 195.615)
     (thickness 1.6)
-    (drawings 20)
+    (drawings 21)
     (tracks 205)
     (zones 0)
     (modules 28)
@@ -6741,6 +6741,9 @@
     )
   )
 
+  (gr_text "5.6V SOD80?" (at 149.9 128.1) (layer Dwgs.User)
+    (effects (font (size 2.032 1.524) (thickness 0.3048)))
+  )
   (gr_text VCC (at 139.9 115.3 90) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
