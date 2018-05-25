@@ -408,7 +408,7 @@ void one_wire_init(void) {
 	};
 	XMC_GPIO_Init(ONE_WIRE_COM_LED_PIN, &led_pin_config);
 
-	one_wire.com_led_state.config  = 3; //COMMUNICATION_LED_CONFIG_SHOW_COMMUNICATION;
+	one_wire.com_led_state.config  = ONE_WIRE_COMMUNICATION_LED_CONFIG_SHOW_COMMUNICATION;
 	one_wire.com_led_state.counter = 0;
 	one_wire.com_led_state.start   = 0;
 
