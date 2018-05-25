@@ -28,15 +28,18 @@
 #include "bricklib2/hal/system_timer/system_timer.h"
 #include "bricklib2/logging/logging.h"
 #include "communication.h"
+#include "one_wire.h"
 
 int main(void) {
 	logging_init();
 	logd("Start One Wire Bricklet\n\r");
 
 	communication_init();
+	one_wire_init();
 
 	while(true) {
 		bootloader_tick();
 		communication_tick();
+		one_wire_tick();
 	}
 }
