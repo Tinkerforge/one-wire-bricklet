@@ -22,7 +22,7 @@ INCLUDE_DIRECTORIES(
 	"${PROJECT_SOURCE_DIR}/src/"
 	"${PROJECT_SOURCE_DIR}/src/bricklib2/xmclib/XMCLib/inc/"
 	"${PROJECT_SOURCE_DIR}/src/bricklib2/xmclib/CMSIS/Include/"
-	"${PROJECT_SOURCE_DIR}/src/bricklib2/xmclib/CMSIS/Infineon/XMC1100_series/Include/"
+	"${PROJECT_SOURCE_DIR}/src/bricklib2/xmclib/CMSIS/Infineon/XMC1300_series/Include/"
 )
 
 # find source files
@@ -34,7 +34,7 @@ SET(SOURCES
 	"${PROJECT_SOURCE_DIR}/src/bricklib2/hal/uartbb/uartbb.c"
 	"${PROJECT_SOURCE_DIR}/src/bricklib2/hal/system_timer/system_timer.c"
 	"${PROJECT_SOURCE_DIR}/src/bricklib2/hal/startup/startup_xmc1.c"
-	"${PROJECT_SOURCE_DIR}/src/bricklib2/hal/startup/startup_xmc1100.S"
+	"${PROJECT_SOURCE_DIR}/src/bricklib2/hal/startup/startup_xmc1300.S"
 	"${PROJECT_SOURCE_DIR}/src/bricklib2/os/coop_task.c"
 	"${PROJECT_SOURCE_DIR}/src/bricklib2/os/coop_task_pendsv_handler.S"
 
