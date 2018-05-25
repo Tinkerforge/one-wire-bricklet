@@ -178,6 +178,7 @@ void one_wire_task_reset(void) {
 	XMC_USIC_CH_SetBaudrate(ONE_WIRE_USIC, ONE_WIRE_BAUDRATE_DATA, ONE_WIRE_OVERSAMPLING);
 }
 
+// The ROM search is taken and adapted from Maxim APP NOTE 187 
 bool one_wire_task_search(void) {
 	bool search_result = false;
 
