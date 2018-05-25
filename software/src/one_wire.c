@@ -166,7 +166,17 @@ uint8_t one_wire_task_byte(uint8_t value) {
 }
 
 void one_wire_task_reset(void) {
-	XMC_USIC_CH_SetBaudrate(ONE_WIRE_USIC, ONE_WIRE_BAUDRATE_RESET, ONE_WIRE_OVERSAMPLING);
+	// XMC_USIC_CH_SetBaudrate(ONE_WIRE_USIC, ONE_WIRE_BAUDRATE_RESET, ONE_WIRE_OVERSAMPLING);
+	// Instead of the SetBaudrate function above we set the values directly (precalculated for 9600 baud)
+	// this function otherwise takes 7ms to execute and calculate the baudrate!
+	ONE_WIRE_USIC->FDR = XMC_USIC_CH_BRG_CLOCK_DIVIDER_MODE_FRACTIONAL | (290 << USIC_CH_FDR_STEP_Pos);
+	ONE_WIRE_USIC->BRG = (ONE_WIRE_USIC->BRG & ~(USIC_CH_BRG_DCTQ_Msk |
+										USIC_CH_BRG_PDIV_Msk |
+										USIC_CH_BRG_PCTQ_Msk |
+										USIC_CH_BRG_PPPEN_Msk)) |
+					((ONE_WIRE_OVERSAMPLING - 1U) << USIC_CH_BRG_DCTQ_Pos) |
+					((59 - 1U) << USIC_CH_BRG_PDIV_Pos);
+
 	one_wire.value = one_wire_task_transceive_uart_byte(0xF0);
 	if(one_wire.response_status != ONE_WIRE_STATUS_TIMEOUT) {
 		switch(one_wire.value) {
@@ -175,7 +185,17 @@ void one_wire_task_reset(void) {
 			default:   one_wire.response_status = ONE_WIRE_STATUS_OK;          break;
 		}
 	}
-	XMC_USIC_CH_SetBaudrate(ONE_WIRE_USIC, ONE_WIRE_BAUDRATE_DATA, ONE_WIRE_OVERSAMPLING);
+
+	// XMC_USIC_CH_SetBaudrate(ONE_WIRE_USIC, ONE_WIRE_BAUDRATE_DATA, ONE_WIRE_OVERSAMPLING);
+	// Instead of the SetBaudrate function above we set the values directly (precalculated for 115200 baud)
+	// this function otherwise takes 7ms to execute and calculate the baudrate!
+	ONE_WIRE_USIC->FDR = XMC_USIC_CH_BRG_CLOCK_DIVIDER_MODE_FRACTIONAL | (177 << USIC_CH_FDR_STEP_Pos);
+	ONE_WIRE_USIC->BRG = (ONE_WIRE_USIC->BRG & ~(USIC_CH_BRG_DCTQ_Msk |
+										USIC_CH_BRG_PDIV_Msk |
+										USIC_CH_BRG_PCTQ_Msk |
+										USIC_CH_BRG_PPPEN_Msk)) |
+					((ONE_WIRE_OVERSAMPLING - 1U) << USIC_CH_BRG_DCTQ_Pos) |
+					((3 - 1U) << USIC_CH_BRG_PDIV_Pos);
 }
 
 // The ROM search is taken and adapted from Maxim APP NOTE 187 
