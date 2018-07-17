@@ -1,9 +1,9 @@
-(kicad_pcb (version 4) (host pcbnew 4.0.2+dfsg1-stable)
+(kicad_pcb (version 4) (host pcbnew 4.0.7-e2-6376~61~ubuntu18.04.1)
 
   (general
     (links 56)
     (no_connects 0)
-    (area 132.109499 109.509499 162.490501 139.890501)
+    (area 11.95714 108.844999 163.155001 195.615)
     (thickness 1.6)
     (drawings 20)
     (tracks 205)
@@ -661,7 +661,7 @@
       (net 1 GND))
   )
 
-  (module kicad-libraries:QFN24-4x4mm-0.5mm (layer F.Cu) (tedit 590CA070) (tstamp 5AF052F8)
+  (module kicad-libraries:QFN24-4x4mm-0.5mm (layer F.Cu) (tedit 5B4DF6C2) (tstamp 5AF052F8)
     (at 140.9 133.4)
     (tags "QFN 24pin 0.5")
     (path /58CC2BB9)
@@ -669,7 +669,7 @@
     (fp_text reference U1 (at 0 -0.4) (layer F.Fab)
       (effects (font (size 0.3 0.3) (thickness 0.075)))
     )
-    (fp_text value XMC1100-16 (at 0 0.8) (layer F.Fab)
+    (fp_text value XMC13XX24 (at 0 0.8) (layer F.Fab)
       (effects (font (size 0.3 0.3) (thickness 0.075)))
     )
     (fp_line (start -1 -2) (end 2 -2) (layer F.Fab) (width 0.15))
