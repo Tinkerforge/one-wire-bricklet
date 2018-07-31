@@ -1,4 +1,4 @@
-update=Mo 30 Jul 2018 15:44:07 CEST
+update=Di 31 Jul 2018 15:05:17 CEST
 version=1
 last_client=kicad
 [cvpcb]
@@ -59,4 +59,4 @@ SpiceUseNetNumbers=0
 LabSize=60
 [eeschema]
 version=1
-LibDir=
+LibDir=kicad-libraries
