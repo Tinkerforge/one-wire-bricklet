@@ -29,6 +29,11 @@ public class ExampleReadDS18B20Temperature {
 			ow.writeCommand(0, 68); // CONVERT T (start temperature conversion)
 			Thread.sleep(1000); // Wait for conversion to finish
 			ow.writeCommand(0, 190); // READ SCRATCHPAD
+
+			int tLow = ow.read().data;
+			int tHigh = ow.read().data;
+
+			System.out.println("Temperature: " + (tLow | (tHigh << 8))/16.0  + " °C");
 		}
 
 		System.out.println("Press key to exit"); System.in.read();
