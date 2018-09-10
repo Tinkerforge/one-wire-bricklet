@@ -1,0 +1,30 @@
+Needs["NETLink`"]
+LoadNETAssembly["Tinkerforge",NotebookDirectory[]<>"../../.."]
+
+(*FIXME: This example is incomplete*)
+
+host="localhost"
+port=4223
+uid="XYZ"(*Change XYZ to the UID of your One Wire Bricklet*)
+
+(*Create IPConnection and device object*)
+ipcon=NETNew["Tinkerforge.IPConnection"]
+ow=NETNew["Tinkerforge.BrickletOneWire",uid,ipcon]
+ipcon@Connect[host,port]
+
+ow@WriteCommand[0,78](*WRITE SCRATCHPAD*)
+ow@Write[0](*ALARM H (unused)*)
+ow@Write[0](*ALARM L (unused)*)
+ow@Write[127](*CONFIGURATION: 12 bit mode*)
+
+(*Read temperature 10 times*)
+For[i=0,i<10,i++,
+ ow@WriteCommand[0,68];(*CONVERT T (start temperature conversion)*)
+ Pause[1];(*Wait for conversion to finish*)
+ ow@WriteCommand[0,190];(*READ SCRATCHPAD*)
+]
+
+(*Clean up*)
+ipcon@Disconnect[]
+ReleaseNETObject[ow]
+ReleaseNETObject[ipcon]

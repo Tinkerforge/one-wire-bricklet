@@ -1,0 +1,40 @@
+Notebook[{
+ Cell[
+  BoxData[{
+   RowBox[{"Needs", "[", "\"\<NETLink`\>\"", "]"}],
+   RowBox[{"LoadNETAssembly", "[", RowBox[{"\"\<Tinkerforge\>\"", ",", RowBox[{RowBox[{"NotebookDirectory", "[", "]"}], "<>", "\"\<../../..\>\""}]}], "]"}]
+  }], "Input"
+ ],
+ Cell[
+  BoxData[{
+   RowBox[{"(*", "FIXME: This example is incomplete", "*)"}],
+   RowBox[{"
+"}],
+   RowBox[{"host", "=", "\"\<localhost\>\""}],
+   RowBox[{"port", "=", "4223"}],
+   RowBox[{"uid", "=", "\"\<XYZ\>\"", RowBox[{"(*", "Change XYZ to the UID of your One Wire Bricklet", "*)"}]}],
+   RowBox[{"
+"}],
+   RowBox[{"(*", "Create IPConnection and device object", "*)"}],
+   RowBox[{"ipcon", "=", RowBox[{"NETNew", "[", "\"\<Tinkerforge.IPConnection\>\"", "]"}]}],
+   RowBox[{"ow", "=", RowBox[{"NETNew", "[", RowBox[{"\"\<Tinkerforge.BrickletOneWire\>\"", ",", "uid", ",", "ipcon"}], "]"}]}],
+   RowBox[{"ipcon", "@", RowBox[{"Connect", "[", RowBox[{"host", ",", "port"}], "]"}]}],
+   RowBox[{"
+"}],
+   RowBox[{"ow", "@", RowBox[{"WriteCommand", "[", RowBox[{"0", ",", "78"}], "]"}], RowBox[{"(*", "WRITE SCRATCHPAD", "*)"}]}],
+   RowBox[{"ow", "@", RowBox[{"Write", "[", "0", "]"}], RowBox[{"(*", "ALARM H (unused)", "*)"}]}],
+   RowBox[{"ow", "@", RowBox[{"Write", "[", "0", "]"}], RowBox[{"(*", "ALARM L (unused)", "*)"}]}],
+   RowBox[{"ow", "@", RowBox[{"Write", "[", "127", "]"}], RowBox[{"(*", "CONFIGURATION: 12 bit mode", "*)"}]}],
+   RowBox[{"
+"}],
+   RowBox[{"(*", "Read temperature 10 times", "*)"}],
+   RowBox[{"For", "[", RowBox[{RowBox[{"i", "=", "0"}], ",", RowBox[{"i", "<", "10"}], ",", RowBox[{"i", "++"}], ",", RowBox[{"\[IndentingNewLine]", "ow", "@", RowBox[{"WriteCommand", "[", RowBox[{"0", ",", "68"}], "]"}], ";", RowBox[{"(*", "CONVERT T (start temperature conversion)", "*)"}], "\[IndentingNewLine]", RowBox[{"Pause", "[", "1", "]"}], ";", RowBox[{"(*", "Wait for conversion to finish", "*)"}], "\[IndentingNewLine]", "ow", "@", RowBox[{"WriteCommand", "[", RowBox[{"0", ",", "190"}], "]"}], ";", RowBox[{"(*", "READ SCRATCHPAD", "*)"}], "\[IndentingNewLine]"}]}], "]"}],
+   RowBox[{"
+"}],
+   RowBox[{"(*", "Clean up", "*)"}],
+   RowBox[{"ipcon", "@", RowBox[{"Disconnect", "[", "]"}]}],
+   RowBox[{"ReleaseNETObject", "[", "ow", "]"}],
+   RowBox[{"ReleaseNETObject", "[", "ipcon", "]"}]
+  }], "Input"
+ ]
+}]
