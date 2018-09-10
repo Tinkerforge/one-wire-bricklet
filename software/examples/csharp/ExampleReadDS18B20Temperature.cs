@@ -2,8 +2,6 @@ using System;
 using System.Threading;
 using Tinkerforge;
 
-// FIXME: This example is incomplete
-
 class Example
 {
 	private static string HOST = "localhost";
@@ -29,6 +27,15 @@ class Example
 			ow.WriteCommand(0, 68); // CONVERT T (start temperature conversion)
 			Thread.Sleep(1000); // Wait for conversion to finish
 			ow.WriteCommand(0, 190); // READ SCRATCHPAD
+
+			byte status;
+			byte t_low;
+			ow.Read(out t_low, out status);
+
+			byte t_high;
+			ow.Read(out t_high, out status);
+
+			Console.WriteLine("Temperature: " + (t_low | (t_high << 8))/16.0 + " °C");
 		}
 
 		Console.WriteLine("Press enter to exit");
