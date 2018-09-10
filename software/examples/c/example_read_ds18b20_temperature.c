@@ -2,8 +2,6 @@
 
 #include <stdio.h>
 
-// FIXME: This example is incomplete
-
 #include "ip_connection.h"
 #include "bricklet_one_wire.h"
 
@@ -27,17 +25,25 @@ int main(void) {
 	}
 	// Don't use device before ipcon is connected
 
-	one_wire_write_command(&ow, 0, 78); // WRITE SCRATCHPAD
-	one_wire_write(&ow, 0); // ALARM H (unused)
-	one_wire_write(&ow, 0); // ALARM L (unused)
-	one_wire_write(&ow, 127); // CONFIGURATION: 12 bit mode
+	uint8_t status;
+	one_wire_write_command(&ow, 0, 78, &status); // WRITE SCRATCHPAD
+	one_wire_write(&ow, 0, &status); // ALARM H (unused)
+	one_wire_write(&ow, 0, &status); // ALARM L (unused)
+	one_wire_write(&ow, 127, &status); // CONFIGURATION: 12 bit mode
 
 	// Read temperature 10 times
 	int i;
 	for(i = 0; i < 10; ++i) {
-		one_wire_write_command(&ow, 0, 68); // CONVERT T (start temperature conversion)
+		one_wire_write_command(&ow, 0, 68, &status); // CONVERT T (start temperature conversion)
 		millisleep(1000); // Wait for conversion to finish
-		one_wire_write_command(&ow, 0, 190); // READ SCRATCHPAD
+		one_wire_write_command(&ow, 0, 190, &status); // READ SCRATCHPAD
+
+		uint8_t t_low;
+		one_wire_read(&ow, &t_low, &status);
+		uint8_t t_high;
+		one_wire_read(&ow, &t_high, &status);
+
+		printf("Temperature: %f °C\n", (t_low | (t_high << 8))/16.0);
 	}
 
 	printf("Press key to exit\n");
