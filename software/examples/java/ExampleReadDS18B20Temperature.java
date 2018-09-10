@@ -1,8 +1,6 @@
 import com.tinkerforge.IPConnection;
 import com.tinkerforge.BrickletOneWire;
 
-// FIXME: This example is incomplete
-
 public class ExampleReadDS18B20Temperature {
 	private static final String HOST = "localhost";
 	private static final int PORT = 4223;
