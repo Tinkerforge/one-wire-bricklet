@@ -1,7 +1,5 @@
 program ExampleReadDS18B20Temperature;
 
-{ FIXME: This example is incomplete }
-
 {$ifdef MSWINDOWS}{$apptype CONSOLE}{$endif}
 {$ifdef FPC}{$mode OBJFPC}{$H+}{$endif}
 
