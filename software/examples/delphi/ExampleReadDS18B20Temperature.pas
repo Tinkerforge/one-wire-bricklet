@@ -27,6 +27,7 @@ var
 
 procedure TExample.Execute;
 var i: integer;
+var t_low, t_high, status: byte;
 begin
   { Create IP connection }
   ipcon := TIPConnection.Create;
@@ -48,6 +49,10 @@ begin
     ow.WriteCommand(0, 68); { CONVERT T (start temperature conversion) }
     Sleep(1000); { Wait for conversion to finish }
     ow.WriteCommand(0, 190); { READ SCRATCHPAD }
+
+	ow.Read(t_low, status);
+	ow.Read(t_high, status);
+	WriteLn('Temperature: %d °C', (t_low or (t_high shl 8))/16.0);
   end;
 
   WriteLn('Press key to exit');
