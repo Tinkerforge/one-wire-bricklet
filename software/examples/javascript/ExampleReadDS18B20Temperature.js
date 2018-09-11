@@ -1,6 +1,4 @@
-var Tinkerforge = require('tinkerforge');
-
-// FIXME: This example is incomplete
+var Tinkerforge = require('./Tinkerforge.js');
 
 var HOST = 'localhost';
 var PORT = 4223;
@@ -8,6 +6,46 @@ var UID = 'XYZ'; // Change XYZ to the UID of your One Wire Bricklet
 
 var ipcon = new Tinkerforge.IPConnection(); // Create IP connection
 var ow = new Tinkerforge.BrickletOneWire(UID, ipcon); // Create device object
+
+var writeCommandPromise = function(ow, identifier, command) {
+    var promise = new Promise(function(resolve, reject) {
+        ow.writeCommand(identifier, command, function(status) {
+            resolve(status);
+        });
+    });
+
+    return promise;
+}
+
+var writePromise = function(ow, data) {
+    var promise = new Promise(function(resolve, reject) {
+        ow.write(data, function(status) {
+            resolve(status);
+        });
+    });
+
+    return promise;
+}
+
+var readPromise = function(ow) {
+    var promise = new Promise(function(resolve, reject) {
+        ow.read(function(data, status) {
+            resolve(data, status);
+        });
+    });
+
+    return promise;
+}
+
+var timeoutPromise = function(millis) {
+    var promise = new Promise(function(resolve, reject) {
+        setTimeout(function () {
+            resolve();
+        }, millis);
+    });
+
+    return promise;
+}
 
 ipcon.connect(HOST, PORT,
     function (error) {
@@ -17,19 +55,21 @@ ipcon.connect(HOST, PORT,
 // Don't use device before ipcon is connected
 
 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
-    function (connectReason) {
-        ow.writeCommand(0, 78); // WRITE SCRATCHPAD
-        ow.write(0); // ALARM H (unused)
-        ow.write(0); // ALARM L (unused)
-        ow.write(127); // CONFIGURATION: 12 bit mode
+    async function (connectReason) {
+        await writeCommandPromise(ow, 0, 78); // WRITE SCRATCHPAD
+        await writePromise(ow, 0); // ALARM H (unused)
+        await writePromise(ow, 0); // ALARM L (unused)
+        await writePromise(ow, 127); // CONFIGURATION: 12 bit mode
 
         // Read temperature 10 times
         for(var i = 0; i < 10; ++i) {
-            ow.writeCommand(0, 68); // CONVERT T (start temperature conversion)
+            await writeCommandPromise(ow, 0, 68); // CONVERT T (start temperature conversion)
+            await timeoutPromise(1000);
+            await writeCommandPromise(ow, 0, 190); // READ SCRATCHPAD
 
-            setTimeout(function () {
-                ow.writeCommand(0, 190); // READ SCRATCHPAD
-            }, 1000 * i + 1000); // Wait for conversion to finish
+            var t_low = await readPromise(ow);
+            var t_high = await readPromise(ow);
+            console.log('Temperature: ' + (t_low | (t_high << 8))/16.0 + ' °C');
         }
     }
 );
