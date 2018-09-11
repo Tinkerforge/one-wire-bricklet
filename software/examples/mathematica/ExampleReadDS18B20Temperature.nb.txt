@@ -1,8 +1,6 @@
 Needs["NETLink`"]
 LoadNETAssembly["Tinkerforge",NotebookDirectory[]<>"../../.."]
 
-(*FIXME: This example is incomplete*)
-
 host="localhost"
 port=4223
 uid="XYZ"(*Change XYZ to the UID of your One Wire Bricklet*)
@@ -22,6 +20,13 @@ For[i=0,i<10,i++,
  ow@WriteCommand[0,68];(*CONVERT T (start temperature conversion)*)
  Pause[1];(*Wait for conversion to finish*)
  ow@WriteCommand[0,190];(*READ SCRATCHPAD*)
+
+ tLow=0;tHigh=0;status=0
+ ow@Read[tLow,status]
+ ow@Read[tHigh,status]
+ temperature = BitOr[tLow,BitShiftLeft[tHigh,8]]/16
+
+ Print["Temperature: "<>ToString[temperature]<>" °C"]
 ]
 
 (*Clean up*)
