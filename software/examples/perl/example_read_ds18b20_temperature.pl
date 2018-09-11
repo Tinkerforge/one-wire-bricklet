@@ -1,7 +1,5 @@
 #!/usr/bin/perl
 
-# FIXME: This example is incomplete
-
 use strict;
 use Tinkerforge::IPConnection;
 use Tinkerforge::BrickletOneWire;
@@ -27,6 +25,12 @@ for (my $i = 0; $i < 10; $i++)
     $ow->write_command(0, 68); # CONVERT T (start temperature conversion)
     sleep(1); # Wait for conversion to finish
     $ow->write_command(0, 190); # READ SCRATCHPAD
+
+    my ($t_low, $status) = $ow->read();
+    my ($t_high, $status) = $ow->read();
+    my $temperature = ($t_low | ($t_high << 8))/16.0;
+
+    print "Temperature: $temperature °C\n";
 }
 
 print "Press key to exit\n";
