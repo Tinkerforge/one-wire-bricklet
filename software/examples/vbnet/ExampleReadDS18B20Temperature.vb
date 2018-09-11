@@ -2,8 +2,6 @@ Imports System
 Imports System.Threading
 Imports Tinkerforge
 
-' FIXME: This example is incomplete
-
 Module ExampleReadDS18B20Temperature
     Const HOST As String = "localhost"
     Const PORT As Integer = 4223
@@ -27,6 +25,12 @@ Module ExampleReadDS18B20Temperature
             ow.WriteCommand(0, 68) ' CONVERT T (start temperature conversion)
             Thread.Sleep(1000) ' Wait for conversion to finish
             ow.WriteCommand(0, 190) ' READ SCRATCHPAD
+
+			Dim tLow, tHigh, status As Short
+			ow.Read(tLow, status)
+			ow.Read(tHigh, status)
+
+			Console.WriteLine("Temperature: " + ((tLow or (tHigh << 8))/16.0).ToString() + " °C")
         Next i
 
         Console.WriteLine("Press key to exit")
