@@ -2,8 +2,6 @@ function matlab_example_read_ds18b20_temperature()
     import com.tinkerforge.IPConnection;
     import com.tinkerforge.BrickletOneWire;
 
-    % FIXME: This example is incomplete
-
     HOST = 'localhost';
     PORT = 4223;
     UID = 'XYZ'; % Change XYZ to the UID of your One Wire Bricklet
@@ -24,8 +22,20 @@ function matlab_example_read_ds18b20_temperature()
         ow.writeCommand(0, 68); % CONVERT T (start temperature conversion)
         pause(1); % Wait for conversion to finish
         ow.writeCommand(0, 190); % READ SCRATCHPAD
+
+        t_low = ow.read();
+        t_high = ow.read();
+        fprintf('Temperature: %f °C\n', bitor(java2int(t_low.data), bitshift(java2int(t_high.data), 8))/16.0);
     end
 
     input('Press key to exit\n', 's');
     ipcon.disconnect();
+end
+
+function int = java2int(value)
+    if compare_versions(version(), "3.8", "<=")
+        int = value.intValue();
+    else
+        int = value;
+    end
 end
