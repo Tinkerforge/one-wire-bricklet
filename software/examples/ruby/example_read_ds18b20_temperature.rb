@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # -*- ruby encoding: utf-8 -*-
 
-# FIXME: This example is incomplete
-
 require 'tinkerforge/ip_connection'
 require 'tinkerforge/bricklet_one_wire'
 
@@ -28,6 +26,12 @@ for _ in 0..9
   ow.write_command 0, 68 # CONVERT T (start temperature conversion)
   sleep 1 # Wait for conversion to finish
   ow.write_command 0, 190 # READ SCRATCHPAD
+
+  t_low = ow.read
+  t_high = ow.read
+  temperature = (t_low[0] | (t_high[0] << 8))/16.0
+
+  puts "Temperature: #{temperature} °C"
 end
 
 puts 'Press key to exit'
