@@ -26,9 +26,9 @@ for (my $i = 0; $i < 10; $i++)
     sleep(1); # Wait for conversion to finish
     $ow->write_command(0, 190); # READ SCRATCHPAD
 
-    my ($t_low, $status) = $ow->read();
-    my ($t_high, $status) = $ow->read();
-    my $temperature = ($t_low | ($t_high << 8))/16.0;
+    my ($t_low, $status1) = $ow->read();
+    my ($t_high, $status2) = $ow->read();
+    my $temperature = ($t_low | ($t_high << 8)) / 16.0;
 
     print "Temperature: $temperature °C\n";
 }

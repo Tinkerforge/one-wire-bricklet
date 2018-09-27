@@ -35,7 +35,7 @@ class Example
 			byte t_high;
 			ow.Read(out t_high, out status);
 
-			Console.WriteLine("Temperature: " + (t_low | (t_high << 8))/16.0 + " °C");
+			Console.WriteLine("Temperature: " + ((t_low | (t_high << 8)) / 16.0) + " °C");
 		}
 
 		Console.WriteLine("Press enter to exit");

@@ -31,7 +31,7 @@ public class ExampleReadDS18B20Temperature {
 			int tLow = ow.read().data;
 			int tHigh = ow.read().data;
 
-			System.out.println("Temperature: " + (tLow | (tHigh << 8))/16.0  + " °C");
+			System.out.println("Temperature: " + ((tLow | (tHigh << 8)) / 16.0) + " °C");
 		}
 
 		System.out.println("Press key to exit"); System.in.read();

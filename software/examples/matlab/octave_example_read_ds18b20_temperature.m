@@ -24,7 +24,7 @@ function octave_example_read_ds18b20_temperature()
 
         t_low = ow.read();
         t_high = ow.read();
-        fprintf('Temperature: %f °C\n', bitor(t_low.data, bitshift(t_high.data, 8))/16.0);
+        fprintf('Temperature: %f °C\n', bitor(t_low.data, bitshift(t_high.data, 8)) / 16.0);
     end
 
     input("Press key to exit\n", "s");

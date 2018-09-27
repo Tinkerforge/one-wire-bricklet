@@ -69,7 +69,7 @@ ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
 
             var t_low = await readPromise(ow);
             var t_high = await readPromise(ow);
-            console.log('Temperature: ' + (t_low | (t_high << 8))/16.0 + ' °C');
+            console.log('Temperature: ' + ((t_low | (t_high << 8)) / 16.0) + ' °C');
         }
     }
 );

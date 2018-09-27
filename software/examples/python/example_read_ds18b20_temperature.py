@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
         t_low = ow.read().data
         t_high = ow.read().data
-        print('Temperature: {0} °C'.format((t_low | (t_high << 8))/16.0))
+        print('Temperature: {0} °C'.format((t_low | (t_high << 8)) / 16.0))
 
     raw_input("Press key to exit\n") # Use input() in Python 3
     ipcon.disconnect()

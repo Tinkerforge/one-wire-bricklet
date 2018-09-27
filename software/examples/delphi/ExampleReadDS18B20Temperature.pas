@@ -50,7 +50,7 @@ begin
 
 	ow.Read(t_low, status);
 	ow.Read(t_high, status);
-	WriteLn('Temperature: %d °C', (t_low or (t_high shl 8))/16.0);
+	WriteLn('Temperature: %d °C', (t_low or (t_high shl 8)) / 16.0);
   end;
 
   WriteLn('Press key to exit');

@@ -26,11 +26,11 @@ Module ExampleReadDS18B20Temperature
             Thread.Sleep(1000) ' Wait for conversion to finish
             ow.WriteCommand(0, 190) ' READ SCRATCHPAD
 
-			Dim tLow, tHigh, status As Short
-			ow.Read(tLow, status)
-			ow.Read(tHigh, status)
+            Dim tLow, tHigh, status As Byte
+            ow.Read(tLow, status)
+            ow.Read(tHigh, status)
 
-			Console.WriteLine("Temperature: " + ((tLow or (tHigh << 8))/16.0).ToString() + " °C")
+            Console.WriteLine("Temperature: " + ((tLow or (tHigh << 8)) / 16.0).ToString() + " °C")
         Next i
 
         Console.WriteLine("Press key to exit")

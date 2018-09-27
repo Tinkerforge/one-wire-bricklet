@@ -98,7 +98,7 @@
 
                             var t_low = await readPromise(ow);
                             var t_high = await readPromise(ow);
-                            textArea.value += 'Temperature: ' + (t_low | (t_high << 8))/16.0 + ' °C';
+                            textArea.value += 'Temperature: ' + ((t_low | (t_high << 8)) / 16.0) + ' °C';
                         }
                     }
                 );

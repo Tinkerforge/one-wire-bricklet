@@ -43,7 +43,7 @@ int main(void) {
 		uint8_t t_high;
 		one_wire_read(&ow, &t_high, &status);
 
-		printf("Temperature: %f °C\n", (t_low | (t_high << 8))/16.0);
+		printf("Temperature: %f °C\n", (t_low | (t_high << 8)) / 16.0);
 	}
 
 	printf("Press key to exit\n");

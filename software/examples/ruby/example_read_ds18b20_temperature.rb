@@ -29,7 +29,7 @@ for _ in 0..9
 
   t_low = ow.read
   t_high = ow.read
-  temperature = (t_low[0] | (t_high[0] << 8))/16.0
+  temperature = (t_low[0] | (t_high[0] << 8)) / 16.0
 
   puts "Temperature: #{temperature} °C"
 end
