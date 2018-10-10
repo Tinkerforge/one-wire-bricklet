@@ -361,9 +361,6 @@ Wire Wire Line
 	1800 2650 1800 2700
 Wire Wire Line
 	4650 2950 4750 2950
-Wire Wire Line
-	4750 2750 4650 2750
-NoConn ~ 4750 3050
 NoConn ~ 4750 5050
 $Comp
 L tinkerforge:CONN_01X01 P2
@@ -422,9 +419,9 @@ Wire Wire Line
 	7850 2550 7850 3200
 Text GLabel 7650 2350 0    47   Input ~ 0
 TX
-Text GLabel 4650 2950 0    47   Output ~ 0
+Text GLabel 4650 3050 0    47   Output ~ 0
 TX
-Text GLabel 4650 2750 0    47   Input ~ 0
+Text GLabel 4650 2950 0    47   Input ~ 0
 RX
 Text GLabel 9350 2650 2    47   Output ~ 0
 RX
@@ -667,7 +664,7 @@ Wire Wire Line
 	8550 4900 8550 5050
 Connection ~ 8300 5050
 Text Notes 3050 3250 0    39   ~ 0
-UART/CH1\nP0.0 : USIC0_CH1-DX0 : RX\nP0.6 : USIC0_CH1-DOUT0 : TX\n\n
+UART/CH1\nP0.6 : USIC0_CH1-DX0 : RX\nP0.7 : USIC0_CH1-DOUT0 : TX\n\n
 $Comp
 L tinkerforge:LED D3
 U 1 1 5AF07846
@@ -777,4 +774,6 @@ Wire Wire Line
 	3300 4150 3300 4450
 Wire Wire Line
 	7850 1850 7850 2450
+Wire Wire Line
+	4750 3050 4650 3050
 $EndSCHEMATC

@@ -1,4 +1,4 @@
-update=Di 31 Jul 2018 15:05:17 CEST
+update=Mi 10 Okt 2018 11:56:05 CEST
 version=1
 last_client=kicad
 [cvpcb]
@@ -47,6 +47,9 @@ LibName10=led
 LibName11=dip_sockets
 LibName12=standard
 LibName13=Logo
+[eeschema]
+version=1
+LibDir=kicad-libraries
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
@@ -54,9 +57,6 @@ PlotDirectoryName=
 SubpartIdSeparator=0
 SubpartFirstId=65
 NetFmtName=Pcbnew
-SpiceForceRefPrefix=0
-SpiceUseNetNumbers=0
+SpiceAjustPassiveValues=0
 LabSize=60
-[eeschema]
-version=1
-LibDir=kicad-libraries
+ERC_TestSimilarLabels=1
