@@ -5,12 +5,12 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
-Title "1-Wire Bricklet"
-Date "2018-05-07"
-Rev "1.0"
+Title "One-Wire Bricklet"
+Date "2018-10-12"
+Rev "1.1"
 Comp "Tinkerforge GmbH"
 Comment1 "Licensed under CERN OHL v.1.1"
-Comment2 "Copyright (©) 2018, L.Lauer <lukas@tinkerforge.com>"
+Comment2 "Copyright (©) 2018, B.Nordmeyer <bastian@tinkerforge.com>"
 Comment3 ""
 Comment4 ""
 $EndDescr
@@ -167,7 +167,7 @@ F 3 "" H 4250 5200 50  0000 C CNN
 	1    4250 5300
 	-1   0    0    1   
 $EndComp
-Text Notes 3050 3650 0    39   ~ 0
+Text Notes 2700 3300 0    39   ~ 0
 SPI Slave/CH0\nP0.13 : USIC0_CH0-DX2F : SEL\nP0.14 : USIC0_CH0-DX1A : CLK\nP0.15 : USIC0_CH0-DX0B : MOSI\nP2.0 : USIC0_CH0-DOUT0 : MISO
 Wire Wire Line
 	1150 2400 1150 2700
@@ -265,7 +265,6 @@ NoConn ~ 4750 5350
 NoConn ~ 4750 5150
 NoConn ~ 4750 4450
 NoConn ~ 4750 4350
-NoConn ~ 4750 3250
 Connection ~ 4600 6850
 Connection ~ 4600 6950
 Wire Wire Line
@@ -321,7 +320,7 @@ F 3 "" H 1800 2700 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+5V #PWR06
+L tinkerforge:+5V #PWR06
 U 1 1 59008D94
 P 1500 1000
 F 0 "#PWR06" H 1500 850 50  0001 C CNN
@@ -375,7 +374,6 @@ F 3 "" H 4200 3150 50  0000 C CNN
 $EndComp
 Wire Wire Line
 	4750 3150 4400 3150
-NoConn ~ 4750 3350
 $Comp
 L tinkerforge:NC7WZ07 U2
 U 1 1 5AF07BD2
@@ -392,7 +390,7 @@ Wire Wire Line
 Wire Wire Line
 	7850 1700 7850 1850
 $Comp
-L power:VCC #PWR07
+L tinkerforge:VCC #PWR07
 U 1 1 5AF0842D
 P 9000 1700
 F 0 "#PWR07" H 9000 1800 30  0001 C CNN
@@ -565,7 +563,7 @@ F 3 "" H 9650 5100 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:VCC #PWR015
+L tinkerforge:VCC #PWR015
 U 1 1 5AF13D6C
 P 9350 4900
 F 0 "#PWR015" H 9350 5000 30  0001 C CNN
@@ -610,7 +608,7 @@ F 3 "" H 7950 3900 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+5V #PWR017
+L tinkerforge:+5V #PWR017
 U 1 1 5AF15D10
 P 7450 4900
 F 0 "#PWR017" H 7450 4750 50  0001 C CNN
@@ -621,7 +619,7 @@ F 3 "" H 7450 4900 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:VCC #PWR018
+L tinkerforge:VCC #PWR018
 U 1 1 5AF161B7
 P 8550 4900
 F 0 "#PWR018" H 8550 5000 30  0001 C CNN
@@ -663,7 +661,7 @@ Wire Wire Line
 Wire Wire Line
 	8550 4900 8550 5050
 Connection ~ 8300 5050
-Text Notes 3050 3250 0    39   ~ 0
+Text Notes 2700 2900 0    39   ~ 0
 UART/CH1\nP0.6 : USIC0_CH1-DX0 : RX\nP0.7 : USIC0_CH1-DOUT0 : TX\n\n
 $Comp
 L tinkerforge:LED D3
@@ -776,4 +774,26 @@ Wire Wire Line
 	7850 1850 7850 2450
 Wire Wire Line
 	4750 3050 4650 3050
+$Comp
+L tinkerforge:GND #PWR?
+U 1 1 5BC08A62
+P 4650 3300
+F 0 "#PWR?" H 4650 3300 30  0001 C CNN
+F 1 "GND" H 4650 3230 30  0001 C CNN
+F 2 "" H 4650 3300 60  0001 C CNN
+F 3 "" H 4650 3300 60  0001 C CNN
+	1    4650 3300
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4750 3250 4650 3250
+Wire Wire Line
+	4650 3250 4650 3300
+Wire Wire Line
+	4750 3350 4650 3350
+Wire Wire Line
+	4650 3350 4650 3300
+Connection ~ 4650 3300
+Text Notes 4100 3350 0    39   ~ 0
+V1.1 detection
 $EndSCHEMATC
