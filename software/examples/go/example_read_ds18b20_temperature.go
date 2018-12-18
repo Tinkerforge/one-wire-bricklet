@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"time"
-"tinkerforge/ipconnection"
-    "tinkerforge/one_wire_bricklet"
+    "github.com/tinkerforge/go-api-bindings/ipconnection"
+    "github.com/tinkerforge/go-api-bindings/one_wire_bricklet"
 )
 
 const ADDR string = "localhost:4223"
