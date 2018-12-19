@@ -7,9 +7,6 @@ Notebook[{
  ],
  Cell[
   BoxData[{
-   RowBox[{"(*", "FIXME: This example is incomplete", "*)"}],
-   RowBox[{"
-"}],
    RowBox[{"host", "=", "\"\<localhost\>\""}],
    RowBox[{"port", "=", "4223"}],
    RowBox[{"uid", "=", "\"\<XYZ\>\"", RowBox[{"(*", "Change XYZ to the UID of your One Wire Bricklet", "*)"}]}],
@@ -28,7 +25,7 @@ Notebook[{
    RowBox[{"
 "}],
    RowBox[{"(*", "Read temperature 10 times", "*)"}],
-   RowBox[{"For", "[", RowBox[{RowBox[{"i", "=", "0"}], ",", RowBox[{"i", "<", "10"}], ",", RowBox[{"i", "++"}], ",", RowBox[{"\[IndentingNewLine]", "ow", "@", RowBox[{"WriteCommand", "[", RowBox[{"0", ",", "68"}], "]"}], ";", RowBox[{"(*", "CONVERT T (start temperature conversion)", "*)"}], "\[IndentingNewLine]", RowBox[{"Pause", "[", "1", "]"}], ";", RowBox[{"(*", "Wait for conversion to finish", "*)"}], "\[IndentingNewLine]", "ow", "@", RowBox[{"WriteCommand", "[", RowBox[{"0", ",", "190"}], "]"}], ";", RowBox[{"(*", "READ SCRATCHPAD", "*)"}], "\[IndentingNewLine]"}]}], "]"}],
+   RowBox[{"For", "[", RowBox[{RowBox[{"i", "=", "0"}], ",", RowBox[{"i", "<", "10"}], ",", RowBox[{"i", "++"}], ",", RowBox[{"\[IndentingNewLine]", "ow", "@", RowBox[{"WriteCommand", "[", RowBox[{"0", ",", "68"}], "]"}], ";", RowBox[{"(*", "CONVERT T (start temperature conversion)", "*)"}], "\[IndentingNewLine]", RowBox[{"Pause", "[", "1", "]"}], ";", RowBox[{"(*", "Wait for conversion to finish", "*)"}], "\[IndentingNewLine]", "ow", "@", RowBox[{"WriteCommand", "[", RowBox[{"0", ",", "190"}], "]"}], ";", RowBox[{"(*", "READ SCRATCHPAD", "*)"}], "\n", "\[IndentingNewLine]", "tLow", "=", "0", ";", "tHigh", "=", "0", ";", "status", "=", "0", "\[IndentingNewLine]", "ow", "@", RowBox[{"Read", "[", RowBox[{"tLow", ",", "status"}], "]"}], "\[IndentingNewLine]", "ow", "@", RowBox[{"Read", "[", RowBox[{"tHigh", ",", "status"}], "]"}], "\[IndentingNewLine]", "temperature", "=", RowBox[{"BitOr", "[", RowBox[{"tLow", ",", RowBox[{"BitShiftLeft", "[", RowBox[{"tHigh", ",", "8"}], "]"}]}], "]"}], "\[IndentingNewLine]", RowBox[{"If", "[", RowBox[{RowBox[{"temperature", ">", RowBox[{"BitShiftLeft", "[", RowBox[{"1", ",", "12"}], "]"}]}], ",", RowBox[{"temperature", "=", "temperature", "-", RowBox[{"BitShiftLeft", "[", RowBox[{"1", ",", "16"}], "]"}]}]}], "]"}], "\[IndentingNewLine]", "temperature", "=", "temperature", "/", "16", "\n", "\[IndentingNewLine]", RowBox[{"Print", "[", RowBox[{"\"\<Temperature: \>\"", "<>", RowBox[{"ToString", "[", "temperature", "]"}], "<>", "\"\< \.b0C\>\""}], "]"}], "\[IndentingNewLine]"}]}], "]"}],
    RowBox[{"
 "}],
    RowBox[{"(*", "Clean up", "*)"}],

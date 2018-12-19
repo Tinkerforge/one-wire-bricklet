@@ -30,8 +30,13 @@ public class ExampleReadDS18B20Temperature {
 
 			int tLow = ow.read().data;
 			int tHigh = ow.read().data;
+			
+			float temperature = (tLow | (tHigh << 8));
+            if (temperature > 1 << 12) {
+                temperature -= 1 << 16; // Negative 12-bit values are sign-extended to 16-bit two's complement.
+            }
 
-			System.out.println("Temperature: " + ((tLow | (tHigh << 8)) / 16.0) + " °C");
+			System.out.println("Temperature: " + temperature / 16.0+ " °C"); // 12 bit mode measures in units of 1/16°C.
 		}
 
 		System.out.println("Press key to exit"); System.in.read();

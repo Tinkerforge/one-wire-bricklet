@@ -43,7 +43,13 @@ int main(void) {
 		uint8_t t_high;
 		one_wire_read(&ow, &t_high, &status);
 
-		printf("Temperature: %f °C\n", (t_low | (t_high << 8)) / 16.0);
+        float temperature = (t_low | (t_high << 8));
+        if (temperature > 1 << 12) {
+            temperature -= 1 << 16; // Negative 12-bit values are sign-extended to 16-bit two's complement.
+        }
+        temperature /= 16.0; // 12 bit mode measures in units of 1/16°C.
+        
+		printf("Temperature: %f °C\n", temperature);
 	}
 
 	printf("Press key to exit\n");

@@ -29,8 +29,14 @@ for _ in 0..9
 
   t_low = ow.read
   t_high = ow.read
-  temperature = (t_low[0] | (t_high[0] << 8)) / 16.0
-
+  
+  temperature = (t_low[0] | (t_high[0] << 8))
+  
+  if (temperature > 1 << 12)
+    temperature -= 1 << 16 # Negative 12-bit values are sign-extended to 16-bit two's complement.
+  end
+  temperature /= 16.0 # 12 bit mode measures in units of 1/16°C.
+    
   puts "Temperature: #{temperature} °C"
 end
 

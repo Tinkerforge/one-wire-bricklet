@@ -26,7 +26,13 @@ fn main() -> Result<(), Box<dyn Error>> {
         let t_low = ow.read().recv()?.data;
         let t_high = ow.read().recv()?.data;
 
-        println!("Temperature: {}°C", ((t_low as u16 | (t_high as u16) << 8) as f32 / 16.0));
+        let mut temperature = (t_low | (t_high << 8)) as f32;
+        if temperature > (1 << 12) as f32 {
+            temperature -= (1 << 16) as f32; // Negative 12-bit values are sign-extended to 16-bit two's complement.
+        }
+        temperature /= 16.0; // 12 bit mode measures in units of 1/16°C.
+        
+        println!("Temperature: {}°C", temperature);
     }
 
     println!("Press enter to exit.");

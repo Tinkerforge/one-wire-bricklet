@@ -29,7 +29,10 @@ for($i = 0; $i < 10; $i++) {
 
     $t_low = $ow->read();
     $t_high = $ow->read();
-	$temperature = ($t_low['data'] | ($t_high['data'] << 8)) / 16.0;
+	$temperature = ($t_low['data'] | ($t_high['data'] << 8));
+    if ($temperature > 1 << 12)
+        $temperature -= 1 << 16; # Negative 12-bit values are sign-extended to 16-bit two's complement.
+    $temperature /= 16.0; # 12 bit mode measures in units of 1/16°C.
 
 	echo "Temperature: " . $temperature . " °C\n";
 }

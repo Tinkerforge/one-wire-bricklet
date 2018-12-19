@@ -24,7 +24,9 @@ For[i=0,i<10,i++,
  tLow=0;tHigh=0;status=0
  ow@Read[tLow,status]
  ow@Read[tHigh,status]
- temperature = BitOr[tLow,BitShiftLeft[tHigh,8]]/16
+ temperature=BitOr[tLow,BitShiftLeft[tHigh,8]]
+ If[temperature>BitShiftLeft[1,12],temperature=temperature-BitShiftLeft[1,16]]
+ temperature=temperature/16
 
  Print["Temperature: "<>ToString[temperature]<>" °C"]
 ]

@@ -34,8 +34,14 @@ class Example
 
 			byte t_high;
 			ow.Read(out t_high, out status);
+            
+            float temperature = (t_low | (t_high << 8));
+            if (temperature > 1 << 12) {
+                temperature -= 1 << 16; // Negative 12-bit values are sign-extended to 16-bit two's complement.
+            }
+            temperature /= 16.0f; // 12 bit mode measures in units of 1/16°C.
 
-			Console.WriteLine("Temperature: " + ((t_low | (t_high << 8)) / 16.0) + " °C");
+			Console.WriteLine("Temperature: " + temperature + " °C");
 		}
 
 		Console.WriteLine("Press enter to exit");

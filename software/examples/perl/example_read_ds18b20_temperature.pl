@@ -28,7 +28,11 @@ for (my $i = 0; $i < 10; $i++)
 
     my ($t_low, $status1) = $ow->read();
     my ($t_high, $status2) = $ow->read();
-    my $temperature = ($t_low | ($t_high << 8)) / 16.0;
+    my $temperature = ($t_low | ($t_high << 8));
+    if ($temperature > 1 << 12) {
+        $temperature -= 1 << 16; # Negative 12-bit values are sign-extended to 16-bit two's complement.
+    }
+    $temperature /= 16.0; # 12 bit mode measures in units of 1/16°C.
 
     print "Temperature: $temperature °C\n";
 }

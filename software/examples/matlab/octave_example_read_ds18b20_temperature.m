@@ -24,7 +24,13 @@ function octave_example_read_ds18b20_temperature()
 
         t_low = ow.read();
         t_high = ow.read();
-        fprintf('Temperature: %f °C\n', bitor(t_low.data, bitshift(t_high.data, 8)) / 16.0);
+    
+        temperature = bitor(t_low.data, bitshift(t_high.data, 8))
+        if (temperature > 1 << 12)
+            temperature -= 1 << 16 // Negative 12-bit values are sign-extended to 16-bit two's complement.
+        endif
+    
+        fprintf('Temperature: %f °C\n', temperature / 16.0); // 12 bit mode measures in units of 1/16°C.
     end
 
     input("Press key to exit\n", "s");

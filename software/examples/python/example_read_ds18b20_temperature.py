@@ -30,7 +30,11 @@ if __name__ == "__main__":
 
         t_low = ow.read().data
         t_high = ow.read().data
-        print('Temperature: {0} °C'.format((t_low | (t_high << 8)) / 16.0))
+        
+        temperature = (t_low | (t_high << 8))
+        if temperature > 1 << 12:
+            temperature -= 1 << 16 # Negative 12-bit values are sign-extended to 16-bit two's complement.
+        temperature /= 16.0 # 12 bit mode measures in units of 1/16°C.
 
     raw_input("Press key to exit\n") # Use input() in Python 3
     ipcon.disconnect()

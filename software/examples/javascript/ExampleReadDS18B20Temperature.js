@@ -69,7 +69,13 @@ ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
 
             var t_low = await readPromise(ow);
             var t_high = await readPromise(ow);
-            console.log('Temperature: ' + ((t_low | (t_high << 8)) / 16.0) + ' °C');
+            var temperature = (t_low | (t_high << 8))
+            if (temperature > 1 << 12) {
+                temperature -= 1 << 16 // Negative 12-bit values are sign-extended to 16-bit two's complement.
+            }
+            temperature /= 16.0 // 12 bit mode measures in units of 1/16°C.
+            
+            console.log('Temperature: ' + temperature + ' °C');
         }
     }
 );

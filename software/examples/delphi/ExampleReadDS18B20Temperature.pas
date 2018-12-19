@@ -26,6 +26,7 @@ var
 procedure TExample.Execute;
 var i: integer;
 var t_low, t_high, status: byte;
+var temperature: Single;
 begin
   { Create IP connection }
   ipcon := TIPConnection.Create;
@@ -49,8 +50,12 @@ begin
     ow.WriteCommand(0, 190); { READ SCRATCHPAD }
 
 	ow.Read(t_low, status);
-	ow.Read(t_high, status);
-	WriteLn('Temperature: %d °C', (t_low or (t_high shl 8)) / 16.0);
+    ow.Read(t_high, status);
+    temperature := (t_low or (t_high shl 8));
+    if temperature > 1 << 12
+    then temperature := temperature - 1 << 16; { Negative 12-bit values are sign-extended to 16-bit two's complement. }
+    temperature := temperature / 16;
+	WriteLn('Temperature: %d °C', temperature); {12 bit mode measures in units of 1/16°C.}
   end;
 
   WriteLn('Press key to exit');
