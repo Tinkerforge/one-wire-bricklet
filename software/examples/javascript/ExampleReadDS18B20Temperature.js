@@ -1,4 +1,4 @@
-var Tinkerforge = require('./Tinkerforge.js');
+var Tinkerforge = require('tinkerforge');
 
 var HOST = 'localhost';
 var PORT = 4223;
