@@ -31,7 +31,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             temperature -= (1 << 16) as f32; // Negative 12-bit values are sign-extended to 16-bit two's complement.
         }
         temperature /= 16.0; // 12 bit mode measures in units of 1/16°C.
-        
+
         println!("Temperature: {}°C", temperature);
     }
 
