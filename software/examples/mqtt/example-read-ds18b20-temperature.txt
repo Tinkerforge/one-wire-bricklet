@@ -26,5 +26,5 @@ setup:
         endif
         
         set temperature to temperature / 16 # 12 bit mode measures in units of 1/16°C.
-        # print temperature
+        print temperature
 	endfor
