@@ -19,7 +19,7 @@ ipcon.connect HOST, PORT # Connect to brickd
 ow.write_command 0, 78 # WRITE SCRATCHPAD
 ow.write 0 # ALARM H (unused)
 ow.write 0 # ALARM L (unused)
-ow.write 127 # CONFIGURATION: 12 bit mode
+ow.write 127 # CONFIGURATION: 12-bit mode
 
 # Read temperature 10 times
 for _ in 0..9
@@ -29,15 +29,16 @@ for _ in 0..9
 
   t_low = ow.read
   t_high = ow.read
-  
-  temperature = (t_low[0] | (t_high[0] << 8))
-  
+
+  temperature = t_low[0] | (t_high[0] << 8)
+
+  # Negative 12-bit values are sign-extended to 16-bit two's complement
   if (temperature > 1 << 12)
-    temperature -= 1 << 16 # Negative 12-bit values are sign-extended to 16-bit two's complement.
+    temperature -= 1 << 16
   end
-  temperature /= 16.0 # 12 bit mode measures in units of 1/16°C.
-    
-  puts "Temperature: #{temperature} °C"
+
+  # 12-bit mode measures in units of 1/16°C
+  puts "Temperature: #{temperature/16.0} °C"
 end
 
 puts 'Press key to exit'

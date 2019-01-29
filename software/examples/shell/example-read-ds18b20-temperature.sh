@@ -6,7 +6,7 @@ uid=XYZ # Change XYZ to the UID of your One Wire Bricklet
 tinkerforge call one-wire-bricklet $uid write-command 0 78 >/dev/null 2>&1 # WRITE SCRATCHPAD
 tinkerforge call one-wire-bricklet $uid write 0 >/dev/null 2>&1 # ALARM H (unused)
 tinkerforge call one-wire-bricklet $uid write 0 >/dev/null 2>&1 # ALARM L (unused)
-tinkerforge call one-wire-bricklet $uid write 127 >/dev/null 2>&1 # CONFIGURATION: 12 bit mode
+tinkerforge call one-wire-bricklet $uid write 127 >/dev/null 2>&1 # CONFIGURATION: 12-bit mode
 
 # Read temperature 10 times
 for i in 0 1 2 3 4 5 6 7 8 9; do

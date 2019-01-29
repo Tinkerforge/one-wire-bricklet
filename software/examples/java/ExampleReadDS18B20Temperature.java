@@ -20,7 +20,7 @@ public class ExampleReadDS18B20Temperature {
 		ow.writeCommand(0, 78); // WRITE SCRATCHPAD
 		ow.write(0); // ALARM H (unused)
 		ow.write(0); // ALARM L (unused)
-		ow.write(127); // CONFIGURATION: 12 bit mode
+		ow.write(127); // CONFIGURATION: 12-bit mode
 
 		// Read temperature 10 times
 		for(int i = 0; i < 10; i++) {
@@ -30,13 +30,16 @@ public class ExampleReadDS18B20Temperature {
 
 			int tLow = ow.read().data;
 			int tHigh = ow.read().data;
-			
-			float temperature = (tLow | (tHigh << 8));
-            if (temperature > 1 << 12) {
-                temperature -= 1 << 16; // Negative 12-bit values are sign-extended to 16-bit two's complement.
-            }
 
-			System.out.println("Temperature: " + temperature / 16.0+ " °C"); // 12 bit mode measures in units of 1/16°C.
+			float temperature = tLow | (tHigh << 8);
+
+			// Negative 12-bit values are sign-extended to 16-bit two's complement
+			if (temperature > 1 << 12) {
+				temperature -= 1 << 16;
+			}
+
+			// 12-bit mode measures in units of 1/16°C
+			System.out.println("Temperature: " + temperature/16.0 + " °C");
 		}
 
 		System.out.println("Press key to exit"); System.in.read();

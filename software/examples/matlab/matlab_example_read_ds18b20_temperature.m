@@ -15,7 +15,7 @@ function matlab_example_read_ds18b20_temperature()
     ow.writeCommand(0, 78); % WRITE SCRATCHPAD
     ow.write(0); % ALARM H (unused)
     ow.write(0); % ALARM L (unused)
-    ow.write(127); % CONFIGURATION: 12 bit mode
+    ow.write(127); % CONFIGURATION: 12-bit mode
 
     % Read temperature 10 times
     for i = 0:9
@@ -25,22 +25,18 @@ function matlab_example_read_ds18b20_temperature()
 
         t_low = ow.read();
         t_high = ow.read();
-        temperature = bitor(java2int(t_low.data), bitshift(java2int(t_high.data), 8))
+
+        temperature = bitor(t_low.data, bitshift(t_high.data, 8));
+
+        % Negative 12-bit values are sign-extended to 16-bit two's complement
         if (temperature > 1 << 12)
-            temperature -= 1 << 16 // Negative 12-bit values are sign-extended to 16-bit two's complement.
-        endif
-    
-        fprintf('Temperature: %f °C\n', temperature / 16.0); // 12 bit mode measures in units of 1/16°C.
+            temperature -= 1 << 16;
+        end
+
+        % 12-bit mode measures in units of 1/16°C
+        fprintf('Temperature: %f °C\n', temperature/16.0);
     end
 
     input('Press key to exit\n', 's');
     ipcon.disconnect();
-end
-
-function int = java2int(value)
-    if compare_versions(version(), "3.8", "<=")
-        int = value.intValue();
-    else
-        int = value;
-    end
 end

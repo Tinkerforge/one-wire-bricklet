@@ -20,7 +20,7 @@ if __name__ == "__main__":
     ow.write_command(0, 78) # WRITE SCRATCHPAD
     ow.write(0) # ALARM H (unused)
     ow.write(0) # ALARM L (unused)
-    ow.write(127) # CONFIGURATION: 12 bit mode
+    ow.write(127) # CONFIGURATION: 12-bit mode
 
     # Read temperature 10 times
     for i in range(10):
@@ -30,11 +30,15 @@ if __name__ == "__main__":
 
         t_low = ow.read().data
         t_high = ow.read().data
-        
-        temperature = (t_low | (t_high << 8))
+
+        temperature = t_low | (t_high << 8)
+
+        # Negative 12-bit values are sign-extended to 16-bit two's complement
         if temperature > 1 << 12:
-            temperature -= 1 << 16 # Negative 12-bit values are sign-extended to 16-bit two's complement.
-        temperature /= 16.0 # 12 bit mode measures in units of 1/16°C.
+            temperature -= 1 << 16
+
+        # 12-bit mode measures in units of 1/16°C
+        print("Illuminance: " + str(temperature/16.0) + " °C")
 
     raw_input("Press key to exit\n") # Use input() in Python 3
     ipcon.disconnect()

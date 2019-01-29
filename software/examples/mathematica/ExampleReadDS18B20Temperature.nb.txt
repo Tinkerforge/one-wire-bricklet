@@ -13,7 +13,7 @@ ipcon@Connect[host,port]
 ow@WriteCommand[0,78](*WRITE SCRATCHPAD*)
 ow@Write[0](*ALARM H (unused)*)
 ow@Write[0](*ALARM L (unused)*)
-ow@Write[127](*CONFIGURATION: 12 bit mode*)
+ow@Write[127](*CONFIGURATION: 12-bit mode*)
 
 (*Read temperature 10 times*)
 For[i=0,i<10,i++,
@@ -21,14 +21,16 @@ For[i=0,i<10,i++,
  Pause[1];(*Wait for conversion to finish*)
  ow@WriteCommand[0,190];(*READ SCRATCHPAD*)
 
- tLow=0;tHigh=0;status=0
- ow@Read[tLow,status]
- ow@Read[tHigh,status]
- temperature=BitOr[tLow,BitShiftLeft[tHigh,8]]
- If[temperature>BitShiftLeft[1,12],temperature=temperature-BitShiftLeft[1,16]]
- temperature=temperature/16
+ tLow=0;tHigh=0;status=0;
+ ow@Read[tLow,status];
+ ow@Read[tHigh,status];
+ temperature=BitOr[tLow,BitShiftLeft[tHigh,8]];
 
- Print["Temperature: "<>ToString[temperature]<>" °C"]
+ (*Negative 12-bit values are sign-extended to 16-bit two's complement*)
+ If[temperature>BitShiftLeft[1,12],temperature=temperature-BitShiftLeft[1,16]];
+
+ (*12 bit-mode measures in units of 1/16°C*)
+ Print["Temperature: "<>ToString[N[Quantity[temperature,"°C/16"]]]]
 ]
 
 (*Clean up*)

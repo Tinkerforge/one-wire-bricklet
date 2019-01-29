@@ -29,7 +29,7 @@ int main(void) {
 	one_wire_write_command(&ow, 0, 78, &status); // WRITE SCRATCHPAD
 	one_wire_write(&ow, 0, &status); // ALARM H (unused)
 	one_wire_write(&ow, 0, &status); // ALARM L (unused)
-	one_wire_write(&ow, 127, &status); // CONFIGURATION: 12 bit mode
+	one_wire_write(&ow, 127, &status); // CONFIGURATION: 12-bit mode
 
 	// Read temperature 10 times
 	int i;
@@ -40,16 +40,19 @@ int main(void) {
 
 		uint8_t t_low;
 		one_wire_read(&ow, &t_low, &status);
+
 		uint8_t t_high;
 		one_wire_read(&ow, &t_high, &status);
 
-        float temperature = (t_low | (t_high << 8));
-        if (temperature > 1 << 12) {
-            temperature -= 1 << 16; // Negative 12-bit values are sign-extended to 16-bit two's complement.
-        }
-        temperature /= 16.0; // 12 bit mode measures in units of 1/16°C.
-        
-		printf("Temperature: %f °C\n", temperature);
+		float temperature = t_low | (t_high << 8);
+
+		// Negative 12-bit values are sign-extended to 16-bit two's complement
+		if (temperature > 1 << 12) {
+			temperature -= 1 << 16;
+		}
+
+		// 12-bit mode measures in units of 1/16°C
+		printf("Temperature: %f °C\n", temperature / 16.0);
 	}
 
 	printf("Press key to exit\n");

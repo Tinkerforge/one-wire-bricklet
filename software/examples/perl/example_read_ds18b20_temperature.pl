@@ -17,7 +17,7 @@ $ipcon->connect(&HOST, &PORT); # Connect to brickd
 $ow->write_command(0, 78); # WRITE SCRATCHPAD
 $ow->write(0); # ALARM H (unused)
 $ow->write(0); # ALARM L (unused)
-$ow->write(127); # CONFIGURATION: 12 bit mode
+$ow->write(127); # CONFIGURATION: 12-bit mode
 
 # Read temperature 10 times
 for (my $i = 0; $i < 10; $i++)
@@ -28,13 +28,15 @@ for (my $i = 0; $i < 10; $i++)
 
     my ($t_low, $status1) = $ow->read();
     my ($t_high, $status2) = $ow->read();
-    my $temperature = ($t_low | ($t_high << 8));
-    if ($temperature > 1 << 12) {
-        $temperature -= 1 << 16; # Negative 12-bit values are sign-extended to 16-bit two's complement.
-    }
-    $temperature /= 16.0; # 12 bit mode measures in units of 1/16°C.
+    my $temperature = $t_low | ($t_high << 8);
 
-    print "Temperature: $temperature °C\n";
+    # Negative 12-bit values are sign-extended to 16-bit two's complement
+    if ($temperature > 1 << 12) {
+        $temperature -= 1 << 16;
+    }
+
+    # 12-bit mode measures in units of 1/16°C
+    print "Temperature: " . $temperature/16.0 . " °C\n";
 }
 
 print "Press key to exit\n";

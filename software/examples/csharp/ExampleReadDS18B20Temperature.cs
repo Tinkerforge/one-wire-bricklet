@@ -19,7 +19,7 @@ class Example
 		ow.WriteCommand(0, 78); // WRITE SCRATCHPAD
 		ow.Write(0); // ALARM H (unused)
 		ow.Write(0); // ALARM L (unused)
-		ow.Write(127); // CONFIGURATION: 12 bit mode
+		ow.Write(127); // CONFIGURATION: 12-bit mode
 
 		// Read temperature 10 times
 		for(int i = 0; i < 10; i++)
@@ -34,14 +34,16 @@ class Example
 
 			byte t_high;
 			ow.Read(out t_high, out status);
-            
-            float temperature = (t_low | (t_high << 8));
-            if (temperature > 1 << 12) {
-                temperature -= 1 << 16; // Negative 12-bit values are sign-extended to 16-bit two's complement.
-            }
-            temperature /= 16.0f; // 12 bit mode measures in units of 1/16°C.
 
-			Console.WriteLine("Temperature: " + temperature + " °C");
+			float temperature = t_low | (t_high << 8);
+
+			// Negative 12-bit values are sign-extended to 16-bit two's complement
+			if (temperature > 1 << 12) {
+				temperature -= 1 << 16;
+			}
+
+			// 12-bit mode measures in units of 1/16°C
+			Console.WriteLine("Temperature: " + temperature/16.0 + " °C");
 		}
 
 		Console.WriteLine("Press enter to exit");

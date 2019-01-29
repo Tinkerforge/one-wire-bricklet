@@ -22,7 +22,7 @@ func main() {
 	ow.WriteCommand(0, 78) // WRITE SCRATCHPAD
 	ow.Write(0)            // ALARM H (unused)
 	ow.Write(0)            // ALARM L (unused)
-	ow.Write(127)          // CONFIGURATION: 12 bit mode
+	ow.Write(127)          // CONFIGURATION: 12-bit mode
 
 	// Read temperature 10 times
 	for i := 0; i < 10; i++ {
@@ -34,12 +34,14 @@ func main() {
 		tHigh, _, _ := ow.Read()
 
 		temperature := float32(uint16(tLow) | uint16(tHigh)<<8)
-		if temperature > 1<<12 {
-			temperature -= 1 << 16 // Negative 12-bit values are sign-extended to 16-bit two's complement.
-		}
-		temperature /= 16.0 // 12 bit mode measures in units of 1/16°C.
 
-		fmt.Printf("Temperature %f°C\n", temperature)
+		// Negative 12-bit values are sign-extended to 16-bit two's complement
+		if temperature > 1 << 12 {
+			temperature -= 1 << 16
+		}
+
+		// 12-bit mode measures in units of 1/16°C
+		fmt.Printf("Temperature %f°C\n", temperature/16.0)
 	}
 
 	fmt.Print("Press enter to exit.")

@@ -29,14 +29,16 @@ Module ExampleReadDS18B20Temperature
             Dim tLow, tHigh, status As Byte
             ow.Read(tLow, status)
             ow.Read(tHigh, status)
-            
-            Dim temperature As Single = (tLow or (tHigh << 8))
+
+            Dim temperature As Single = tLow or (tHigh << 8)
+
+            ' Negative 12-bit values are sign-extended to 16-bit two's complement
             If temperature > 1 << 12 Then
-                temperature -= 1 << 16 ' Negative 12-bit values are sign-extended to 16-bit two's complement.
+                temperature -= 1 << 16
             End If
-            temperature /= 16 ' 12 bit mode measures in units of 1/16°C.
-            
-            Console.WriteLine("Temperature: " + temperature.ToString() + " °C")
+
+            ' 12-bit mode measures in units of 1/16°C.
+            Console.WriteLine("Temperature: " + (temperature/16.0).ToString() + " °C")
         Next i
 
         Console.WriteLine("Press key to exit")
