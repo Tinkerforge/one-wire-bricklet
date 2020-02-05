@@ -26,7 +26,7 @@ Module ExampleReadDS18B20Temperature
             Thread.Sleep(1000) ' Wait for conversion to finish
             ow.WriteCommand(0, 190) ' READ SCRATCHPAD
 
-            Dim tLow, tHigh, status As Byte
+            Dim tLow, tHigh, status As Integer
             ow.Read(tLow, status)
             ow.Read(tHigh, status)
 
