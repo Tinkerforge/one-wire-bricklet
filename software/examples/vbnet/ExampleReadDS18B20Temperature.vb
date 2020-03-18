@@ -17,7 +17,7 @@ Module ExampleReadDS18B20Temperature
         ow.WriteCommand(0, 78) ' WRITE SCRATCHPAD
         ow.Write(0) ' ALARM H (unused)
         ow.Write(0) ' ALARM L (unused)
-        ow.Write(127) ' CONFIGURATION: 12 bit mode
+        ow.Write(127) ' CONFIGURATION: 12-bit mode
 
         ' Read temperature 10 times
         Dim i As Integer
