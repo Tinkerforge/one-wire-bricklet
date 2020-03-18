@@ -5,26 +5,26 @@ setup:
 	publish '{"data": 0}' to tinkerforge/request/one_wire_bricklet/XYZ/write  # ALARM H (unused)
 	publish '{"data": 0}' to tinkerforge/request/one_wire_bricklet/XYZ/write  # ALARM L (unused)
 	publish '{"data": 127}' to tinkerforge/request/one_wire_bricklet/XYZ/write  # CONFIGURATION: 12 bit mode
-	
+
 	# Read temperature 10 times
 	for i in 0..9:
 		publish '{"identifier": 0, "command": 68}' to tinkerforge/request/one_wire_bricklet/XYZ/write_command  # CONVERT T (start temperature conversion)
 		wait for 1s  # Wait for conversion to finish
 		publish '{"identifier": 0, "command": 190}' to tinkerforge/request/one_wire_bricklet/XYZ/write_command  # READ SCRATCHPAD
-		
+
 		subscribe to tinkerforge/response/one_wire_bricklet/XYZ/read # Subscribe to responses for read commands below
-            first message is t_low
-            second message is t_high
+			first message is t_low
+			second message is t_high
 		endsubscribe
-		
+
 		publish '' to tinkerforge/request/one_wire_bricklet/XYZ/read # Read t_low
 		publish '' to tinkerforge/request/one_wire_bricklet/XYZ/read # Read t_high
-		
-		set temperature to t_low | (t_high << 8) 
+
+		set temperature to t_low | (t_high << 8)
 		if temperature > (1 << 12)
-            set temperature to temperature - (1 << 16) # Negative 12-bit values are sign-extended to 16-bit two's complement.
-        endif
-        
-        set temperature to temperature / 16 # 12 bit mode measures in units of 1/16°C.
-        print temperature
+			set temperature to temperature - (1 << 16) # Negative 12-bit values are sign-extended to 16-bit two's complement.
+		endif
+
+		set temperature to temperature / 16 # 12 bit mode measures in units of 1/16°C.
+		print temperature
 	endfor
