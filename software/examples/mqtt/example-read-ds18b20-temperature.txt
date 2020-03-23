@@ -1,16 +1,21 @@
 # Change XYZ to the UID of your One Wire Bricklet
 
 setup:
-	publish '{"identifier": 0, "command": 78}' to tinkerforge/request/one_wire_bricklet/XYZ/write_command  # WRITE SCRATCHPAD
-	publish '{"data": 0}' to tinkerforge/request/one_wire_bricklet/XYZ/write  # ALARM H (unused)
-	publish '{"data": 0}' to tinkerforge/request/one_wire_bricklet/XYZ/write  # ALARM L (unused)
-	publish '{"data": 127}' to tinkerforge/request/one_wire_bricklet/XYZ/write  # CONFIGURATION: 12 bit mode
+	publish '{"identifier": 0, "command": 78}' to tinkerforge/request/one_wire_bricklet/XYZ/write_command # WRITE SCRATCHPAD
+
+	publish '{"data": 0}' to tinkerforge/request/one_wire_bricklet/XYZ/write # ALARM H (unused)
+
+	publish '{"data": 0}' to tinkerforge/request/one_wire_bricklet/XYZ/write # ALARM L (unused)
+
+	publish '{"data": 127}' to tinkerforge/request/one_wire_bricklet/XYZ/write # CONFIGURATION: 12-bit mode
 
 	# Read temperature 10 times
-	for i in 0..9:
-		publish '{"identifier": 0, "command": 68}' to tinkerforge/request/one_wire_bricklet/XYZ/write_command  # CONVERT T (start temperature conversion)
-		wait for 1s  # Wait for conversion to finish
-		publish '{"identifier": 0, "command": 190}' to tinkerforge/request/one_wire_bricklet/XYZ/write_command  # READ SCRATCHPAD
+	for i in 0..9
+		publish '{"identifier": 0, "command": 68}' to tinkerforge/request/one_wire_bricklet/XYZ/write_command # CONVERT T (start temperature conversion)
+
+		wait for 1s # Wait for conversion to finish
+
+		publish '{"identifier": 0, "command": 190}' to tinkerforge/request/one_wire_bricklet/XYZ/write_command # READ SCRATCHPAD
 
 		subscribe to tinkerforge/response/one_wire_bricklet/XYZ/read # Subscribe to responses for read commands below
 			first message is t_low
