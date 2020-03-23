@@ -11,6 +11,7 @@ setup:
 
 	# Read temperature 10 times
 	for i in 0..9
+
 		publish '{"identifier": 0, "command": 68}' to tinkerforge/request/one_wire_bricklet/XYZ/write_command # CONVERT T (start temperature conversion)
 
 		wait for 1s # Wait for conversion to finish
@@ -32,4 +33,5 @@ setup:
 
 		set temperature to temperature / 16 # 12 bit mode measures in units of 1/16°C.
 		print temperature
+
 	endfor
