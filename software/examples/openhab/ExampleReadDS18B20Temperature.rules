@@ -1,0 +1,32 @@
+rule "Read DS18B20 Temperature"
+when
+    System started // Replace with trigger of your choice
+then
+    // Change XYZ to the UID of your One Wire Bricklet
+    val owActions = getActions("tinkerforge", "tinkerforge:brickletonewire:XYZ")
+
+    owActions.brickletOneWireWriteCommand(0, 78) // WRITE SCRATCHPAD
+    owActions.brickletOneWireWrite(0) // ALARM H (unused)
+    owActions.brickletOneWireWrite(0) // ALARM L (unused)
+    owActions.brickletOneWireWrite(127) // CONFIGURATION: 12-bit mode
+
+    owActions.brickletOneWireWriteCommand(0, 68) // CONVERT T (start temperature conversion)
+
+    createTimer(now.plusSeconds(1), [| // Wait for conversion to finish
+
+        owActions.brickletOneWireWriteCommand(0, 190) // READ SCRATCHPAD
+
+        val tLow = owActions.brickletOneWireRead().get("data") as int
+        val tHigh = owActions.brickletOneWireRead().get("data") as int
+
+        var float temperature = tLow + (tHigh * 256)
+
+        // Negative 12-bit values are sign-extended to 16-bit two's complement
+        if (temperature > 4096) {
+            temperature = temperature - 65536
+        }
+
+        // 12-bit mode measures in units of 1/16°C
+        logInfo("Example", "Temperature: " + temperature / 16.0 + "°C")
+    ])
+end
