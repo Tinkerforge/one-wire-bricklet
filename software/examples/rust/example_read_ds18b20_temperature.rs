@@ -34,7 +34,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
 
         // 12-bit mode measures in units of 1/16°C
-        println!("Temperature: {}°C", temperature / 16.0);
+        println!("Temperature: {} °C", temperature / 16.0);
     }
 
     println!("Press enter to exit.");
