@@ -19,9 +19,9 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // Read temperature 10 times
     for _i in 0..10 {
-        ow.write_command(0, 68); // CONVERT T (start temperature conversion)
+        ow.write_command(0, 68).recv()?; // CONVERT T (start temperature conversion); use recv()? to block until the command is sent to the bricklet.
         thread::sleep(Duration::from_millis(1000)); // Wait for conversion to finish
-        ow.write_command(0, 190); // READ SCRATCHPAD
+        ow.write_command(0, 190).recv()?; // READ SCRATCHPAD; use recv()? to block until the command is sent to the bricklet.
 
         let t_low = ow.read().recv()?.data;
         let t_high = ow.read().recv()?.data;
