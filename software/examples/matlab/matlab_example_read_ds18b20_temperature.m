@@ -29,8 +29,8 @@ function matlab_example_read_ds18b20_temperature()
         temperature = bitor(t_low.data, bitshift(t_high.data, 8));
 
         % Negative 12-bit values are sign-extended to 16-bit two's complement
-        if (temperature > 1 << 12)
-            temperature -= 1 << 16;
+        if (temperature > bitshift(1, 12))
+            temperature -= bitshift(1, 16);
         end
 
         % 12-bit mode measures in units of 1/16°C
