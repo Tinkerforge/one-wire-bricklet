@@ -60,7 +60,7 @@ begin
     end;
 
     { 12-bit mode measures in units of 1/16°C }
-    WriteLn('Temperature: %f °C', temperature/16.0);
+    WriteLn(Format('Temperature: %f °C', [temperature/16.0]));
   end;
 
   WriteLn('Press key to exit');
