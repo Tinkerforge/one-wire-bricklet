@@ -33,7 +33,7 @@ func main() {
 		tLow, _, _ := ow.Read()
 		tHigh, _, _ := ow.Read()
 
-		temperature := float32(uint16(tLow) | uint16(tHigh)<<8)
+		temperature := float32(uint16(tLow) | uint16(tHigh) << 8)
 
 		// Negative 12-bit values are sign-extended to 16-bit two's complement
 		if temperature > 1 << 12 {
@@ -41,7 +41,7 @@ func main() {
 		}
 
 		// 12-bit mode measures in units of 1/16°C
-		fmt.Printf("Temperature %f°C\n", temperature/16.0)
+		fmt.Printf("Temperature %f °C\n", temperature/16.0)
 	}
 
 	fmt.Print("Press enter to exit.")
