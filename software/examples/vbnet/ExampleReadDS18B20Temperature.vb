@@ -26,11 +26,11 @@ Module ExampleReadDS18B20Temperature
             Thread.Sleep(1000) ' Wait for conversion to finish
             ow.WriteCommand(0, 190) ' READ SCRATCHPAD
 
-            Dim tLow, tHigh, status As Integer
+            Dim tLow, tHigh, status As Byte
             ow.Read(tLow, status)
             ow.Read(tHigh, status)
 
-            Dim temperature As Single = tLow or (tHigh << 8)
+            Dim temperature As Single = tLow or (Convert.ToUInt32(tHigh) << 8)
 
             ' Negative 12-bit values are sign-extended to 16-bit two's complement
             If temperature > 1 << 12 Then
