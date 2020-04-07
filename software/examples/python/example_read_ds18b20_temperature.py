@@ -38,7 +38,7 @@ if __name__ == "__main__":
             temperature -= 1 << 16
 
         # 12-bit mode measures in units of 1/16°C
-        print("Illuminance: " + str(temperature/16.0) + " °C")
+        print("Temperature: " + str(temperature/16.0) + " °C")
 
     input("Press key to exit\n") # Use raw_input() in Python 2
     ipcon.disconnect()
