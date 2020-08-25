@@ -56,7 +56,6 @@ void example_setup(TF_HalContext *hal) {
 
 		tf_hal_printf("Temperature: %d.%s%d °C\n", temp_degrees, padding, temp_tenthousandth_degree);
 	}
-
 }
 
 void example_loop(TF_HalContext *hal) {
