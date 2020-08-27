@@ -3,9 +3,12 @@
 
 #define UID "XYZ" // Change XYZ to the UID of your One Wire Bricklet
 
+void example_setup(TF_HalContext *hal);
+void example_loop(TF_HalContext *hal);
+
 void check(int rc, const char* msg);
 
-TF_OneWire ow;
+static TF_OneWire ow;
 
 void example_setup(TF_HalContext *hal) {
 	// Create device object
@@ -30,7 +33,7 @@ void example_setup(TF_HalContext *hal) {
 		uint8_t t_high;
 		check(tf_one_wire_read(&ow, &t_high, &status), "read high byte");
 
-		uint16_t temperature = t_low | (t_high << 8);
+		uint16_t temperature = t_low | (uint16_t)(t_high << 8);
 
 		// Negative 12-bit values are sign-extended to 16-bit two's complement
 		if (temperature > 1 << 12) {
