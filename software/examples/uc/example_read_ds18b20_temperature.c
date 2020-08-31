@@ -57,7 +57,7 @@ void example_setup(TF_HalContext *hal) {
 		if(temp_tenthousandth_degree < 1)
 			padding[3] = '0';
 
-		tf_hal_printf("Temperature: %d.%s%d °C\n", temp_degrees, padding, temp_tenthousandth_degree);
+		tf_hal_printf("Temperature: %I16d.%s%I16d °C\n", temp_degrees, padding, temp_tenthousandth_degree);
 	}
 }
 
