@@ -1,22 +1,19 @@
 // This example is not self-contained.
-// It requres usage of the example driver specific to your platform.
+// It requires usage of the example driver specific to your platform.
 // See the HAL documentation.
 
-#include "bindings/hal_common.h"
-#include "bindings/bricklet_one_wire.h"
+#include "src/bindings/hal_common.h"
+#include "src/bindings/bricklet_one_wire.h"
 
-#define UID "XYZ" // Change XYZ to the UID of your One Wire Bricklet
-
+void check(int rc, const char *msg);
 void example_setup(TF_HAL *hal);
 void example_loop(TF_HAL *hal);
-
-void check(int rc, const char* msg);
 
 static TF_OneWire ow;
 
 void example_setup(TF_HAL *hal) {
 	// Create device object
-	check(tf_one_wire_create(&ow, UID, hal), "create device object");
+	check(tf_one_wire_create(&ow, NULL, hal), "create device object");
 
 	uint8_t status;
 	check(tf_one_wire_write_command(&ow, 0, 78, &status), "call write_command"); // WRITE SCRATCHPAD
@@ -26,7 +23,7 @@ void example_setup(TF_HAL *hal) {
 
 	// Read temperature 10 times
 	int i;
-	for(i = 0; i < 10; ++i) {
+	for (i = 0; i < 10; ++i) {
 		check(tf_one_wire_write_command(&ow, 0, 68, &status), "call write_command"); // CONVERT T (start temperature conversion)
 		tf_hal_sleep_us(hal, 1000 * 1000); // Wait for conversion to finish
 		check(tf_one_wire_write_command(&ow, 0, 190, &status), "call write_command"); // READ SCRATCHPAD
