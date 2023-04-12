@@ -3,3 +3,6 @@
 
 2019-05-29: 2.0.1 (5cef042)
 - Fix SPITFP IRQ race condition with other higher prio IRQs (through bricklib2)
+
+2023-04-12: 2.0.2 (TBD)
+- Add support for hardware version 1.1

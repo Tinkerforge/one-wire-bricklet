@@ -1,5 +1,5 @@
 /* one-wire-bricklet
- * Copyright (C) 2018 Olaf Lüke <olaf@tinkerforge.com>
+ * Copyright (C) 2018, 2023 Olaf Lüke <olaf@tinkerforge.com>
  *
  * config.h: All configurations for One Wire Bricklet
  *
@@ -31,7 +31,7 @@
 
 #define FIRMWARE_VERSION_MAJOR 2
 #define FIRMWARE_VERSION_MINOR 0
-#define FIRMWARE_VERSION_REVISION 1
+#define FIRMWARE_VERSION_REVISION 2
 
 #include "config_custom_bootloader.h"
 

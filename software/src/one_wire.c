@@ -1,5 +1,5 @@
 /* one-wire-bricklet
- * Copyright (C) 2018 Olaf Lüke <olaf@tinkerforge.com>
+ * Copyright (C) 2018, 2023 Olaf Lüke <olaf@tinkerforge.com>
  *
  * one_wire.c: One Wire protocol implementation
  *
@@ -64,12 +64,13 @@ void __attribute__((optimize("-O3"))) __attribute__ ((section (".ram_code"))) on
 
 
 void one_wire_init_uart(void) {
-	// For prototype only, remove me!!!
-	const XMC_GPIO_CONFIG_t proto_config = {
-		.mode = XMC_GPIO_MODE_INPUT_TRISTATE,
+	const XMC_GPIO_CONFIG_t version_detect = {
+		.mode = XMC_GPIO_MODE_INPUT_PULL_UP,
 		.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
 	};
-	XMC_GPIO_Init(P0_0, &proto_config);
+	XMC_GPIO_Init(ONE_WIRE_VERSION_DETECTION0, &version_detect);
+	XMC_GPIO_Init(ONE_WIRE_VERSION_DETECTION1, &version_detect);
+
 
 	// RX pin configuration.
 	const XMC_GPIO_CONFIG_t rx_pin_config = {
@@ -77,15 +78,26 @@ void one_wire_init_uart(void) {
 		.input_hysteresis = XMC_GPIO_INPUT_HYSTERESIS_STANDARD
 	};
 
-	// TX pin configuration.
-	const XMC_GPIO_CONFIG_t tx_pin_config = {
-		.mode = ONE_WIRE_TX_PIN_AF,
-		.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
-	};
+	// Configure pins according to hardware version
+	if(!XMC_GPIO_GetInput(ONE_WIRE_VERSION_DETECTION0) && !XMC_GPIO_GetInput(ONE_WIRE_VERSION_DETECTION1)) {
+		// TX pin configuration.
+		const XMC_GPIO_CONFIG_t tx_pin_config = {
+			.mode = ONE_WIRE_TX11_PIN_AF,
+			.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+		};
 
-	// Configure  pins.
-	XMC_GPIO_Init(ONE_WIRE_RX_PIN, &rx_pin_config);
-	XMC_GPIO_Init(ONE_WIRE_TX_PIN, &tx_pin_config);
+		XMC_GPIO_Init(ONE_WIRE_RX11_PIN, &rx_pin_config);
+		XMC_GPIO_Init(ONE_WIRE_TX11_PIN, &tx_pin_config);
+	} else {
+		// TX pin configuration.
+		const XMC_GPIO_CONFIG_t tx_pin_config = {
+			.mode = ONE_WIRE_TX_PIN_AF,
+			.output_level = XMC_GPIO_OUTPUT_LEVEL_HIGH
+		};
+
+		XMC_GPIO_Init(ONE_WIRE_RX_PIN, &rx_pin_config);
+		XMC_GPIO_Init(ONE_WIRE_TX_PIN, &tx_pin_config);
+	}
 
 	// Initialize USIC channel in UART mode.
 
@@ -101,8 +113,12 @@ void one_wire_init_uart(void) {
 
 	XMC_UART_CH_Init(ONE_WIRE_USIC, &config);
 
-	// Set input source path.
-	XMC_UART_CH_SetInputSource(ONE_WIRE_USIC, ONE_WIRE_RX_INPUT, ONE_WIRE_RX_SOURCE);
+	// Configure input source path according to hardware version
+	if(!XMC_GPIO_GetInput(ONE_WIRE_VERSION_DETECTION0) && !XMC_GPIO_GetInput(ONE_WIRE_VERSION_DETECTION1)) {
+		XMC_UART_CH_SetInputSource(ONE_WIRE_USIC, ONE_WIRE_RX11_INPUT, ONE_WIRE_RX11_SOURCE);
+	} else {
+		XMC_UART_CH_SetInputSource(ONE_WIRE_USIC, ONE_WIRE_RX_INPUT, ONE_WIRE_RX_SOURCE);
+	}
 
 	// Configure TX FIFO.
 	XMC_USIC_CH_TXFIFO_Configure(ONE_WIRE_USIC, 32, XMC_USIC_CH_FIFO_SIZE_16WORDS, 8);

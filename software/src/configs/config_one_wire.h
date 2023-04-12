@@ -1,5 +1,5 @@
 /* one-wire-bricklet
- * Copyright (C) 2018 Olaf Lüke <olaf@tinkerforge.com>
+ * Copyright (C) 2018, 2023 Olaf Lüke <olaf@tinkerforge.com>
  *
  * config_one_wire.h: One Wire specific configurations
  *
@@ -35,6 +35,16 @@
 
 #define ONE_WIRE_TX_PIN              P0_6
 #define ONE_WIRE_TX_PIN_AF           (XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7 | P0_6_AF_U0C1_DOUT0)
+
+#define ONE_WIRE_RX11_PIN            P0_6
+#define ONE_WIRE_RX11_INPUT          XMC_USIC_CH_INPUT_DX0
+#define ONE_WIRE_RX11_SOURCE         0b010 // DX0C.
+
+#define ONE_WIRE_TX11_PIN            P0_7
+#define ONE_WIRE_TX11_PIN_AF         (XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7 | P0_7_AF_U0C1_DOUT0)
+
+#define ONE_WIRE_VERSION_DETECTION0  P0_9
+#define ONE_WIRE_VERSION_DETECTION1  P0_12
 
 #define ONE_WIRE_COM_LED_PIN         P1_1
 
