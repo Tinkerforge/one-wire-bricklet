@@ -26,7 +26,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         let t_low = ow.read().recv()?.data;
         let t_high = ow.read().recv()?.data;
 
-        let mut temperature = (t_low | (t_high << 8)) as f32;
+        let mut temperature = (t_low as u16 | ((t_high as u16) << 8)) as f32;
 
         // Negative 12-bit values are sign-extended to 16-bit two's complement
         if temperature > (1 << 12) as f32 {
